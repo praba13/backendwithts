@@ -1,12 +1,25 @@
-import React from 'react';
-import Button from 'react-bootstrap/Button';
+import React, { useEffect, useState } from 'react';
+import { Note } from './models/note';
 
 function App() {
-  return (
-    <div className='App'>
-      <Button variant='primary'>Primary</Button>
-    </div>
-  );
+  const [notes, setNotes] = useState<Note[]>([]);
+
+  useEffect(() => {
+    async function loadNotes() {
+      try {
+        const response = await fetch('/api/notes', {
+          method: 'GET'
+        });
+        const notes = await response.json();
+        setNotes(notes);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    loadNotes();
+  }, []);
+
+  return <div className='App'>{JSON.stringify(notes)}</div>;
 }
 
 export default App;
