@@ -6,6 +6,7 @@ import AddNoteDialog from './components/AddNoteDialog';
 import styles from './styles/NotesPage.module.css';
 import styleUtils from './styles/utils.module.css';
 import * as NotesApi from './network/notes_api';
+import { FaPlus } from 'react-icons/fa';
 
 function App() {
   const [notes, setNotes] = useState<NoteModel[]>([]);
@@ -51,9 +52,10 @@ function App() {
   return (
     <Container>
       <Button
-        className={`mb-4 ${styleUtils.blockCenter}`}
+        className={`mb-4 ${styleUtils.blockCenter} ${styleUtils.flexCenter}`}
         onClick={() => setShowAddNoteDialog(true)}
       >
+        <FaPlus />
         Add New Note
       </Button>
       <Row xs={1} md={2} xl={3} className='g-4'>
