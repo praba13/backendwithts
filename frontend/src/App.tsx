@@ -38,6 +38,16 @@ function App() {
     loadNotes();
   }, []);
 
+  async function deleteNote(note: NoteModel) {
+    try {
+      await NotesApi.deleteNote(note._id);
+      setNotes(notes.filter((existingNote) => existingNote._id !== note._id));
+    } catch (error) {
+      console.error(error);
+      alert(error);
+    }
+  }
+
   return (
     <Container>
       <Button
@@ -50,7 +60,11 @@ function App() {
         {/* {JSON.stringify(notes)} */}
         {notes.map((note) => (
           <Col key={note._id}>
-            <Note note={note} className={styles.note} />
+            <Note
+              note={note}
+              className={styles.note}
+              onDeleteNoteClicked={deleteNote}
+            />
           </Col>
         ))}
       </Row>
