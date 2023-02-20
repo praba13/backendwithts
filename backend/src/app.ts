@@ -3,12 +3,15 @@ import morgan from 'morgan';
 import express, { NextFunction, Request, Response } from 'express';
 
 import noteRoutes from './routes/noteRoutes';
+import userRoutes from './routes/userRoutes';
+
 import createHttpError, { isHttpError } from 'http-errors';
 
 const app = express();
 app.use(morgan('dev'));
 app.use(express.json());
 app.use('/api/notes', noteRoutes);
+app.use('/api/users', userRoutes);
 
 app.use((req, res, next) => {
   next(createHttpError(404, 'Endpoint not found'));
