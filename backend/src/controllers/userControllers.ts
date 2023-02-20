@@ -3,6 +3,31 @@ import createHttpError from 'http-errors';
 import UserModel from '../models/userModel';
 import bcrypt from 'bcrypt';
 
+export const getAuthenticatedUser: RequestHandler = async (req, res, next) => {
+  const authenticatedUserId = req.session.userId;
+
+  /* try {
+    const user = await UserModel.findById(req.session.userId)
+      .select('+email')
+      .exec();
+    res.status(200).json(user);
+  } catch (error) {
+    next(error);
+  } */
+
+  try {
+    if (!authenticatedUserId) {
+      throw createHttpError(401, 'User not authenticated');
+    }
+    const user = await UserModel.findById(authenticatedUserId)
+      .select('+email')
+      .exec();
+    res.status(200).json(user);
+  } catch (error) {
+    next(error);
+  }
+};
+
 interface SignUpBody {
   username?: string;
   email?: string;
