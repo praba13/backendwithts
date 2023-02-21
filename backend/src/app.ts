@@ -4,6 +4,7 @@ import express, { NextFunction, Request, Response } from 'express';
 import session from 'express-session';
 import env from './utils/validateEnv';
 import MongoStore from 'connect-mongo';
+import { requiresAuth } from './middleware/auth';
 
 import noteRoutes from './routes/noteRoutes';
 import userRoutes from './routes/userRoutes';
@@ -29,7 +30,7 @@ app.use(
   })
 );
 
-app.use('/api/notes', noteRoutes);
+app.use('/api/notes', requiresAuth, noteRoutes);
 app.use('/api/users', userRoutes);
 
 app.use((req, res, next) => {
