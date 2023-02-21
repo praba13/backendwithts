@@ -8,6 +8,7 @@ import styleUtils from './styles/utils.module.css';
 import * as NotesApi from './network/notes_api';
 import { FaPlus } from 'react-icons/fa';
 import SignUpModal from './components/SignUpModal';
+import LoginModal from './components/LoginModal';
 
 function App() {
   const [notes, setNotes] = useState<NoteModel[]>([]);
@@ -117,9 +118,10 @@ function App() {
           }}
         />
       )}
-      {true && (
+      {false && (
         <SignUpModal onDismiss={() => {}} onSignUpSuccessful={() => {}} />
       )}
+      {true && <LoginModal onDismiss={() => {}} onLoginSuccessful={() => {}} />}
     </Container>
   );
 }
